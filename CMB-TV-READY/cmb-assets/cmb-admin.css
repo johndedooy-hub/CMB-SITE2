@@ -1,0 +1,106 @@
+/* CHAZZO MUSIC BOX (CMB) - gedeelde opmaak voor alle beheerpagina's (admin, studio, claude, back-up) */
+.hint { color:#a8aac8; font-size:11px; display:block; margin-top:4px; }
+.cmb-mini { background:#1d2142; color:#fff; border:1px solid rgba(255,255,255,.18); border-radius:8px; padding:7px 12px; font-weight:800; font-size:12px; cursor:pointer; }
+.cmb-mini:hover { border-color:#ffd166; color:#ffd166; }
+.cmb-check { display:flex; align-items:center; gap:8px; font-size:13px; font-weight:700; color:#f7f7ff; text-transform:none; cursor:pointer; margin:6px 0; }
+.cmb-subbox { background:rgba(5,6,14,.7); border:1px solid rgba(255,255,255,.08); border-radius:10px; padding:12px; margin-top:12px; }
+.cmb-subbox-title { font-size:12px; color:#ffd166; font-weight:900; text-transform:uppercase; letter-spacing:.05em; margin-bottom:10px; }
+
+/* Wisselknoppen linker / rechter frame */
+.cmb-switch { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px; }
+.cmb-switch button { background:#121427; color:#a8aac8; border:1px solid rgba(255,255,255,.12); border-radius:10px; padding:11px 18px; font-weight:900; font-size:13px; cursor:pointer; }
+.cmb-switch button.active { background:#63f6ff; color:#070812; border-color:#63f6ff; }
+.cmb-frame-panel.cmb-hidden { display:none; }
+.cmb-helpbox { background:rgba(99,246,255,.07); border:1px solid rgba(99,246,255,.25); border-radius:10px; padding:12px 14px; font-size:13px; line-height:1.5; color:#dfe2ff; margin-bottom:14px; }
+
+/* Frame-paneel met stappen en live voorbeeld */
+.cmb-frame-panel { background:#0f1226; border:1px solid rgba(99,246,255,.2); border-radius:14px; padding:14px; margin-bottom:16px; }
+.cmb-fp-head { display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; border-bottom:1px solid rgba(99,246,255,.2); padding-bottom:8px; margin-bottom:12px; }
+.cmb-fp-head strong { color:#63f6ff; font-size:16px; }
+.cmb-fp-grid { display:grid; grid-template-columns:minmax(0,1fr) 250px; gap:16px; align-items:start; }
+@media (max-width: 980px) { .cmb-fp-grid { grid-template-columns:1fr; } }
+.cmb-step { background:#121427; border:1px solid rgba(255,255,255,.08); border-radius:12px; margin-bottom:12px; }
+.cmb-step > summary { cursor:pointer; list-style:none; padding:12px 14px; font-weight:900; font-size:14px; color:#f7f7ff; display:flex; align-items:center; gap:10px; }
+.cmb-step > summary::-webkit-details-marker { display:none; }
+.cmb-step[open] > summary { border-bottom:1px solid rgba(255,255,255,.08); }
+.cmb-step-no { display:inline-flex; width:24px; height:24px; border-radius:50%; background:#ffd166; color:#070812; font-size:13px; align-items:center; justify-content:center; font-weight:900; }
+.cmb-step-body { padding:12px 14px 14px; }
+.cmb-fp-preview { position:sticky; top:12px; background:#0b0d1c; border:1px solid rgba(255,255,255,.1); border-radius:12px; padding:12px; }
+.cmb-fp-preview-title { font-size:12px; font-weight:900; color:#ffd166; margin-bottom:8px; text-transform:uppercase; letter-spacing:.05em; }
+.cmb-fp-box { --cyan:#63f6ff; --magenta:#ff5bc8; --violet:#7928ca; --gold:#ffd166;
+    position:relative; width:100%; height:150px; background:linear-gradient(135deg,#0b1020,#1b1f40); box-sizing:border-box;
+    display:flex; align-items:center; justify-content:center; color:#6c7096; font-weight:800; letter-spacing:.1em; overflow:hidden; }
+.cmb-fp-anim { position:absolute; inset:0; border-radius:inherit; pointer-events:none; overflow:hidden; }
+.cmb-grad-sample { height:38px; border-radius:8px; border:1px solid rgba(255,255,255,.2); }
+.cmb-gradient-row { align-items:flex-end; }
+
+/* Tabellen voor zijden en hoeken */
+.cmb-side-table { width:100%; border-collapse:collapse; margin-bottom:8px; }
+.cmb-side-table th { text-align:left; font-size:11px; text-transform:uppercase; color:#a8aac8; padding:4px 6px; }
+.cmb-side-table td { padding:4px 6px; border-top:1px solid rgba(255,255,255,.06); font-size:13px; }
+.cmb-side-table input[type="number"], .cmb-side-table select { width:100%; }
+.cmb-side-table input[type="color"] { width:60px; }
+.cmb-quick-row { display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin:8px 0 4px; }
+
+/* Stijl & lettertype-vak: tekst bovenaan, stijl netjes in een eigen vak eronder */
+.cmb-style-card { background:#121427; border:1px solid rgba(255,255,255,.1); border-radius:12px; padding:12px; margin-bottom:12px; }
+.cmb-style-card-label { font-weight:900; color:#f7f7ff; margin-bottom:6px; font-size:14px; }
+.cmb-style-card textarea { width:100%; resize:vertical; min-height:44px; }
+.cmb-style-panel { margin-top:8px; background:rgba(5,6,14,.65); border:1px dashed rgba(255,209,102,.4); border-radius:10px; }
+.cmb-style-panel > summary { cursor:pointer; list-style:none; display:flex; align-items:center; gap:10px; padding:8px 12px; font-size:12px; font-weight:900; color:#ffd166; }
+.cmb-style-panel > summary::-webkit-details-marker { display:none; }
+.cmb-style-sample { margin-left:auto; max-width:55%; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; padding:2px 10px; border-radius:6px; background:#05060d; border:1px solid rgba(255,255,255,.1); }
+.cmb-style-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(120px,1fr)); gap:10px; padding:4px 12px 12px; }
+.cmb-style-grid .field { min-width:0; }
+.cmb-style-grid .wide { grid-column:span 2; }
+@media (max-width:520px) { .cmb-style-grid .wide { grid-column:span 1; } }
+
+/* Topmenu-blok */
+.cmb-top-card { background:#121427; border:1px solid rgba(255,255,255,.1); border-radius:12px; padding:12px; margin-bottom:12px; }
+.cmb-top-card-head { display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:6px; }
+.cmb-top-card-head strong { color:#63f6ff; }
+
+/* Clipslides en widgets */
+.cmb-cs-row { border:1px solid rgba(255,255,255,.1); border-radius:12px; padding:12px; margin-bottom:12px; background:rgba(5,6,14,.6); }
+.cmb-cs-head { display:flex; gap:12px; align-items:center; margin-bottom:10px; flex-wrap:wrap; }
+.cmb-cs-num { width:30px; height:30px; border-radius:50%; background:#b388ff; color:#070812; font-weight:900; display:flex; align-items:center; justify-content:center; }
+.cmb-size-note { font-size:11px; font-weight:800; }
+.cmb-size-ok { color:#00e676; } .cmb-size-bad { color:#ff5470; }
+
+
+/* ---- Mini-voorbeeld bij mediavelden ---- */
+.cmb-mp { position:relative; width:90px; height:56px; flex:0 0 90px; border-radius:8px; overflow:hidden; border:1px solid rgba(255,255,255,.2); background:#05060d; display:inline-block; align-self:center; }
+.cmb-mp.on { border-color:#00e676; }
+.cmb-mp-thumb { width:100%; height:100%; display:flex; align-items:center; justify-content:center; }
+.cmb-mp-thumb img, .cmb-mp-thumb video { width:100%; height:100%; object-fit:cover; display:block; }
+.cmb-mp-empty { font-size:10px; color:#a8aac8; text-align:center; padding:2px; }
+.cmb-mp-ok { display:none; position:absolute; left:3px; bottom:3px; width:18px; height:18px; line-height:18px; text-align:center; border-radius:50%; background:#00e676; color:#070812; font-size:12px; font-weight:900; }
+.cmb-mp.on .cmb-mp-ok { display:block; }
+.cmb-mp-x { display:none; position:absolute; right:3px; top:3px; width:20px; height:20px; padding:0; border:none; border-radius:50%; background:rgba(255,23,68,.92); color:#fff; font-size:11px; font-weight:900; cursor:pointer; line-height:20px; }
+.cmb-mp.on .cmb-mp-x { display:block; }
+.cmb-mp.small { width:100%; height:44px; flex:none; display:block; margin:2px 0; }
+.cmb-mp-status { font-size:11px; font-weight:800; color:#00e676; margin-top:4px; overflow-wrap:anywhere; }
+.cmb-mp-status:empty { display:none; }
+.cmb-upload-tick { display:none !important; }
+
+/* ---------- Ingeklapte onderdelen: rustiger, even/oneven licht verschil ---------- */
+.cmb-fold-bar { display: flex; gap: 8px; margin: 0 0 12px; }
+.cmb-fold-bar button { background: #171a32; color: #a8aac8; border: 1px solid rgba(255,255,255,.08); border-radius: 8px; padding: 5px 12px; font-size: 11px; font-weight: 700; cursor: pointer; }
+.cmb-fold-bar button:hover { color: #fff; border-color: rgba(99,246,255,.5); }
+.cmb-fold { border: 1px solid rgba(255,255,255,.06) !important; box-shadow: none !important; margin-bottom: 10px !important; padding: 0 !important; border-left-width: 3px !important; overflow: hidden; }
+.cmb-fold-odd { background: #111428 !important; border-left-color: rgba(99,246,255,.45) !important; }
+.cmb-fold-even { background: #15112b !important; border-left-color: rgba(179,136,255,.45) !important; }
+.cmb-fold-open { border-color: rgba(255,255,255,.14) !important; }
+.cmb-fold-head { display: flex; align-items: center; gap: 10px; cursor: pointer; user-select: none; padding: 13px 18px !important; margin: 0 !important; border: 0 !important; min-height: 46px; }
+h2.cmb-fold-head { font-size: 15px !important; }
+.cmb-fold-head:hover { background: rgba(255,255,255,.03); }
+.cmb-fold-head:focus-visible { outline: 2px solid rgba(99,246,255,.6); outline-offset: -2px; }
+.cmb-fold-chev { color: #63f6ff; font-size: 13px; width: 14px; transition: transform .15s; flex-shrink: 0; }
+.cmb-fold-open > .cmb-fold-head .cmb-fold-chev { transform: rotate(90deg); }
+.cmb-fold-title { font-weight: 800; color: #e9eaff; font-size: 14px; white-space: nowrap; }
+.cmb-fold-sum { color: #8f92b5; font-size: 12px; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cmb-fold-state { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; padding: 2px 8px; border-radius: 10px; flex-shrink: 0; }
+.cmb-fold-state.on { color: #00e676; background: rgba(0,230,118,.12); }
+.cmb-fold-state.off { color: #8f92b5; background: rgba(255,255,255,.06); }
+.cmb-fold-body { padding: 4px 18px 18px; }
+.cmb-fold-block .cmb-fold-body { padding-top: 8px; }

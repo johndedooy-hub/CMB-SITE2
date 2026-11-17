@@ -1,0 +1,897 @@
+/* ==========================================================================
+   CHAZZO MUSIC BOX (CMB) - MASTER EFFECTS ENGINE
+   Bestandsnaam: cmb-effects.css
+   Bevat: Alle 92 Cover Effecten + 17 Geanimeerde Frame Effecten
+   ========================================================================== */
+
+/* HOLLOW FRAME BORDER LIGHTING (Alleen op de buitenrand, nooit over de slide-achtergrond!) */
+        .frame-chaser-layer,
+        .frame-rain-curtain,
+        .frame-pulse-glow,
+        .frame-music-disco,
+        .frame-random-spec,
+        .frame-snow-dots,
+        .frame-golden-sparks,
+        .frame-neon-waterfall,
+        .frame-laser-radar,
+        .frame-breathing-aurora,
+        .frame-cyber-matrix {
+            position: absolute;
+            inset: 0;
+            /* Het effect wordt als holle rand gemaskeerd; de middenruimte blijft transparant. */
+            border-radius: inherit;
+            padding: 3px;
+            pointer-events: none !important;
+            z-index: 15;
+            box-sizing: border-box;
+            overflow: hidden;
+            -webkit-mask-image: linear-gradient(#fff 0 0), linear-gradient(#fff 0 0);
+            -webkit-mask-origin: border-box, content-box;
+            -webkit-mask-clip: border-box, content-box;
+            -webkit-mask-composite: xor;
+            mask-image: linear-gradient(#fff 0 0), linear-gradient(#fff 0 0);
+            mask-origin: border-box, content-box;
+            mask-clip: border-box, content-box;
+            mask-composite: exclude;
+            transform: translateZ(0);
+            will-change: transform;
+        }
+
+        /* Gedeelde hoekcorrectie: afgeronde, gesloten hoeken zonder polygon/clip-path. */
+        .frame-chaser-layer,
+        .frame-rain-curtain,
+        .frame-pulse-glow,
+        .frame-music-disco,
+        .frame-random-spec,
+        .frame-snow-dots,
+        .frame-golden-sparks,
+        .frame-neon-waterfall,
+        .frame-laser-radar,
+        .frame-breathing-aurora,
+        .frame-cyber-matrix {
+            clip-path: none !important;
+            border-radius: inherit !important;
+        }
+
+        .chaser-spin-layer::before {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            pointer-events: none !important;
+        }
+
+        .frame-rain-curtain {
+            background: repeating-linear-gradient(180deg, var(--cyan) 0px, transparent 15px, var(--magenta) 30px, transparent 45px);
+            background-size: 100% 90px;
+            animation: rainCurtainFall 1.8s linear infinite;
+            filter: drop-shadow(0 0 6px var(--cyan));
+        }
+
+        .frame-pulse-glow {
+            background: linear-gradient(135deg, var(--cyan), var(--magenta));
+            animation: pulseGlowBreathe 2.4s ease-in-out infinite;
+        }
+
+        .frame-music-disco {
+            background: linear-gradient(135deg, var(--gold), var(--cyan), var(--magenta));
+            animation: discoSpectrumCycle 3s linear infinite, pulseGlowBreathe 1.2s infinite;
+        }
+
+        .frame-random-spec {
+            background: conic-gradient(red, yellow, lime, cyan, blue, magenta, red);
+            animation: discoSpectrumCycle 4s linear infinite;
+        }
+
+        @keyframes chaserSpin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        
+
+
+
+
+        .cmb-art-stage {
+            width: min(186px, 48%); aspect-ratio: 1; position: relative;
+            display: flex; align-items: center; justify-content: center;
+            margin-top: 64px; margin-bottom: 0;
+            z-index: 2;
+        }
+        .cmb-art-stage::before, .cmb-art-stage::after {
+            content: ""; position: absolute; pointer-events: none !important; z-index: 0;
+            border-radius: 50%;
+        }
+
+/* KEYFRAMES VOOR COVER EFFECTEN */
+@keyframes fxRotCW { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+@keyframes fxRotCCW { 0% { transform: rotate(360deg); } 100% { transform: rotate(0deg); } }
+@keyframes fxPulseSoft { 0% { transform: scale(0.95); opacity: 0.6; } 100% { transform: scale(1.12); opacity: 0.95; } }
+@keyframes fxMorph71 {
+    0% { border-radius: 42% 58% 62% 38% / 55% 35% 65% 45%; transform: rotate(0deg) scale(1); }
+    50% { border-radius: 65% 35% 38% 62% / 35% 65% 35% 65%; transform: rotate(180deg) scale(1.12); }
+    100% { border-radius: 42% 58% 62% 38% / 55% 35% 65% 45%; transform: rotate(360deg) scale(1); }
+}
+@keyframes fxFire72 {
+    0% { transform: rotate(0deg) scale(1.02); filter: drop-shadow(0 0 12px #ff3d00); }
+    50% { transform: rotate(-180deg) scale(1.18); filter: drop-shadow(0 0 22px #ffea00); }
+    100% { transform: rotate(-360deg) scale(1.02); filter: drop-shadow(0 0 12px #ff3d00); }
+}
+@keyframes fxFireRingFlicker {
+    0% { transform: rotate(0deg) scale(1.02); filter: drop-shadow(0 0 15px #ff3d00) drop-shadow(0 0 25px #ff9100); }
+    50% { transform: rotate(180deg) scale(1.12); filter: drop-shadow(0 0 28px #ffea00) drop-shadow(0 0 35px #ff1744); }
+    100% { transform: rotate(360deg) scale(1.02); filter: drop-shadow(0 0 15px #ff3d00) drop-shadow(0 0 25px #ff9100); }
+}
+@keyframes fxCdShinyShimmer {
+    0% { transform: rotate(0deg); filter: brightness(1.1); }
+    50% { transform: rotate(180deg); filter: brightness(1.7) contrast(1.3); }
+    100% { transform: rotate(360deg); filter: brightness(1.1); }
+}
+@keyframes fxLightning { 0%, 90%, 96%, 100% { opacity: 0; filter: blur(2px); } 92%, 94% { opacity: 1; filter: drop-shadow(0 0 25px #ffffff) drop-shadow(0 0 35px var(--cyan)); } }
+@keyframes fxFanCW { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+@keyframes fxFanCCW { 0% { transform: rotate(360deg); } 100% { transform: rotate(0deg); } }
+@keyframes fxRainDrop { 0% { background-position: 0 0; } 100% { background-position: 0 200px; } }
+@keyframes fxHypnoPulse { 0% { transform: scale(0.8) rotate(0deg); opacity: 0.5; } 50% { transform: scale(1.15) rotate(180deg); opacity: 0.95; } 100% { transform: scale(0.8) rotate(360deg); opacity: 0.5; } }
+@keyframes fxStreepjesMove { 0% { background-size: 100% 8px; } 50% { background-size: 100% 24px; } 100% { background-size: 100% 8px; } }
+
+
+
+/* ==========================================================================
+   VOLLEDIGE 82 EFFECTEN SUITE (1 T/M 82)
+   ========================================================================== */
+
+/* 1. Disc Classic */
+.fx-disc::before, .fx-vinyl-classic::before {
+    inset: -22px;
+    background: repeating-conic-gradient(from 0deg, #ffffff 0deg 3deg, transparent 3deg 8deg, var(--cyan) 8deg 11deg, transparent 11deg 16deg);
+    animation: var(--fx-ccw) 5s linear infinite;
+    border-radius: 50%; opacity: 0.9; filter: drop-shadow(0 0 6px var(--cyan));
+}
+.fx-disc::after, .fx-vinyl-classic::after {
+    inset: -10px;
+    background: repeating-radial-gradient(circle, rgba(255,255,255,0.2) 0, rgba(255,255,255,0.2) 1px, transparent 2px, transparent 4px);
+    border-radius: 50%; opacity: 0.7;
+}
+
+/* 2. Neon Glow */
+.fx-glow::before { inset: -24px; background: radial-gradient(circle, var(--cyan) 0%, rgba(99,246,255,0.2) 50%, transparent 75%); filter: blur(14px); opacity: 0.9; animation: fxPulseSoft 2.5s ease-in-out infinite alternate; }
+
+/* 3. Aurora Borealis */
+.fx-aurora::before { inset: -20px; background: conic-gradient(from 0deg, var(--cyan), var(--violet), var(--magenta), var(--gold), var(--cyan)); filter: blur(14px); opacity: 0.8; animation: var(--fx-cw) 8s linear infinite; }
+.fx-aurora::after { inset: -12px; background: radial-gradient(circle, rgba(99,246,255,0.4) 0%, transparent 70%); filter: blur(8px); animation: fxPulseSoft 3s ease-in-out infinite alternate; }
+
+/* 4. Disco Strobe */
+.fx-disco::before { inset: -22px; background: conic-gradient(from 45deg, #ff0055, #00e5ff, #ffee00, #ff0055); filter: blur(12px); opacity: 0.85; animation: var(--fx-cw) 2.5s linear infinite; }
+
+/* 5. Liquid Blob */
+.fx-blob::before { inset: -20px; background: linear-gradient(45deg, #ff007f, #00f0ff); animation: fxMorph71 6s ease-in-out infinite alternate; filter: blur(10px); opacity: 0.85; }
+
+/* 6. Audio Bars */
+@keyframes fxBarsPulse { 0%, 100% { transform: scale(0.96) rotate(0deg); } 50% { transform: scale(1.08) rotate(180deg); } }
+.fx-bars::before { inset: -22px; background: repeating-conic-gradient(from 0deg, var(--cyan) 0deg 8deg, transparent 8deg 16deg, var(--magenta) 16deg 24deg, transparent 24deg 32deg); animation: fxBarsPulse 3s linear infinite; filter: blur(6px); opacity: 0.9; }
+
+/* 7. Comet Trail */
+.fx-comet::before { inset: -24px; background: conic-gradient(from 0deg, #ff0055 0deg 90deg, transparent 180deg 360deg); animation: var(--fx-cw) 2s linear infinite; filter: blur(8px); opacity: 0.95; }
+
+/* 8. Ripple Wave */
+@keyframes fxRippleWave { 0% { transform: scale(0.85); opacity: 1; } 100% { transform: scale(1.25); opacity: 0; } }
+.fx-ripple::before { inset: -24px; border: 3px solid var(--cyan); border-radius: 50%; animation: fxRippleWave 2s cubic-bezier(0, 0.2, 0.8, 1) infinite; }
+.fx-ripple::after { inset: -16px; border: 2px solid var(--gold); border-radius: 50%; animation: fxRippleWave 2s cubic-bezier(0, 0.2, 0.8, 1) infinite 1s; }
+
+/* 9. Pulse Ring Gold */
+.fx-pulse-ring::before { inset: -20px; background: radial-gradient(circle, #ffd166 20%, transparent 70%); animation: fxPulseSoft 2s ease-in-out infinite alternate; filter: blur(10px); opacity: 0.85; }
+
+/* 10. Radar Scan */
+.fx-radar::before { inset: -20px; background: conic-gradient(from 0deg, transparent 0deg 300deg, rgba(0, 230, 118, 0.95) 360deg); filter: blur(6px); animation: var(--fx-cw) 3.5s linear infinite; }
+
+/* 11. Neon Hex */
+.fx-neon-hex::before { inset: -22px; background: conic-gradient(from 30deg, #00f0ff 0deg 60deg, #ff007f 120deg 180deg, #ffff00 240deg 300deg, #00f0ff 360deg); animation: var(--fx-cw) 6s steps(6) infinite; filter: blur(9px); opacity: 0.85; }
+
+/* 12. Vinyl Gold */
+.fx-vinyl-gold::before {
+    inset: -24px;
+    background: repeating-radial-gradient(circle, #ffd166 0, #ffd166 1px, transparent 2px, transparent 4px),
+                conic-gradient(from 45deg, #ffd166, #ff9100, #ffea00, #ffd166);
+    animation: var(--fx-cw) 6s linear infinite;
+    border-radius: 50%; opacity: 0.9; filter: drop-shadow(0 0 10px #ff9100);
+}
+.fx-vinyl-gold::after {
+    inset: -12px;
+    background: radial-gradient(circle, rgba(255,209,102,0.4) 0%, transparent 75%);
+    border-radius: 50%; animation: fxPulseSoft 2.5s infinite alternate;
+}
+
+/* 13. Rainbow Spin */
+.fx-rainbow-spin::before { inset: -22px; background: conic-gradient(red, orange, yellow, green, cyan, blue, magenta, red); animation: var(--fx-cw) 3s linear infinite; filter: blur(10px); opacity: 0.9; }
+
+/* 14. Cyber Glitch */
+@keyframes fxGlitch { 0%, 100% { transform: translate(0); } 20% { transform: translate(-3px, 3px); filter: hue-rotate(90deg); } 40% { transform: translate(3px, -3px); filter: hue-rotate(180deg); } 60% { transform: translate(-2px, -2px); filter: hue-rotate(270deg); } }
+.fx-glitch::before { inset: -20px; background: conic-gradient(from 0deg, #00ffff, #ff00ff, #00ffff); animation: fxGlitch 0.4s infinite; filter: blur(6px); opacity: 0.85; }
+
+/* 15. Breathe Slow */
+.fx-breathe::before { inset: -24px; background: radial-gradient(circle, rgba(99,246,255,0.7) 0%, transparent 70%); animation: fxPulseSoft 4s ease-in-out infinite alternate; filter: blur(12px); }
+
+/* 16. Sonar Ping */
+.fx-sonar::before { inset: -24px; border: 2px solid #00e676; border-radius: 50%; animation: fxRippleWave 2.5s linear infinite; filter: drop-shadow(0 0 6px #00e676); }
+
+/* 17. Gold Glow */
+.fx-gold-glow::before { inset: -24px; background: radial-gradient(circle, #ffd166 0%, rgba(255,209,102,0.2) 60%, transparent 75%); animation: fxPulseSoft 2.2s infinite alternate; filter: blur(14px); }
+
+/* 18. Multi Pulse */
+@keyframes fxMultiPulse { 0% { transform: scale(0.9); opacity: 0.5; } 50% { transform: scale(1.18); opacity: 1; } 100% { transform: scale(0.9); opacity: 0.5; } }
+.fx-multi-pulse::before { inset: -22px; background: conic-gradient(from 0deg, var(--cyan), var(--magenta), var(--cyan)); animation: fxMultiPulse 1.8s ease-in-out infinite, var(--fx-cw) 5s linear infinite; filter: blur(10px); }
+
+/* 19. White Strobe */
+@keyframes fxStrobeW { 0%, 100% { opacity: 0.2; } 50% { opacity: 1; filter: drop-shadow(0 0 20px #fff); } }
+.fx-strobe::before { inset: -20px; background: radial-gradient(circle, #ffffff 30%, transparent 70%); animation: fxStrobeW 0.8s infinite; filter: blur(10px); }
+
+/* 20. Spin Dashed */
+.fx-spin-dashed::before { inset: -22px; background: repeating-conic-gradient(from 0deg, var(--cyan) 0deg 20deg, transparent 20deg 40deg); animation: var(--fx-cw) 4s linear infinite; filter: blur(6px); opacity: 0.85; }
+
+/* 21. Double Echo */
+.fx-echo::before { inset: -26px; border: 2px solid var(--magenta); border-radius: 50%; animation: fxRippleWave 2.8s infinite; }
+.fx-echo::after { inset: -18px; border: 2px solid var(--cyan); border-radius: 50%; animation: fxRippleWave 2.8s infinite 1.4s; }
+
+/* 22. Fire Ring (Haarscherp) */
+.fx-fire-ring::before {
+    inset: -8px;
+    background: conic-gradient(from 0deg, #ff1744, #ff9100, #ffea00, #ff3d00, #ff1744);
+    animation: var(--fx-cw) 3.5s linear infinite;
+    border-radius: 50%; opacity: 0.95;
+    -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #fff calc(100% - 2px));
+    mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #fff calc(100% - 2px));
+    filter: drop-shadow(0 0 6px #ff3d00) drop-shadow(0 0 12px #ff9100);
+}
+.fx-fire-ring::after {
+    inset: -14px;
+    background: radial-gradient(circle, transparent 70%, rgba(255, 61, 0, 0.4) 85%, transparent 100%);
+    animation: fxFireRingFlicker 2s ease-in-out infinite alternate;
+    border-radius: 50%; pointer-events: none;
+}
+
+/* 23. Cyberpunk */
+.fx-cyberpunk::before { inset: -22px; background: conic-gradient(from 180deg, #ff007f, #00f0ff, #7928ca, #ff007f); filter: blur(14px); opacity: 0.85; animation: var(--fx-ccw) 5s linear infinite; }
+
+/* 24. Vinyl Classic */
+/* (reeds gekoppeld aan .fx-disc) */
+
+/* 25. Neon Pulse */
+.fx-neon-pulse::before { inset: -22px; background: radial-gradient(circle, #00ffff 0%, #ff007f 50%, transparent 75%); animation: fxPulseSoft 1.6s ease-in-out infinite alternate; filter: blur(12px); }
+
+/* 26. Prism Rainbow */
+.fx-prism::before { inset: -24px; background: conic-gradient(from 60deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #8b00ff, #ff0000); animation: var(--fx-cw) 5s linear infinite; filter: blur(8px); opacity: 0.9; }
+
+/* 27. EQ Circle */
+.fx-equalizer-circle::before { inset: -22px; background: repeating-conic-gradient(from 0deg, #00e676 0deg 10deg, transparent 10deg 20deg, #ffd166 20deg 30deg, transparent 30deg 40deg); animation: var(--fx-cw) 8s linear infinite; filter: blur(5px); }
+
+/* 28. Vortex Cosmic */
+.fx-vortex::before { inset: -24px; background: conic-gradient(from 0deg, #7928ca, #ff0080, #0070f3, #7928ca); animation: var(--fx-cw) 3.5s linear infinite; filter: blur(12px); opacity: 0.9; }
+
+/* 29. Matrix Glow */
+.fx-matrix-glow::before { inset: -22px; background: radial-gradient(circle, #00e676 20%, rgba(0,230,118,0.2) 60%, transparent 75%); animation: fxPulseSoft 2s infinite alternate; filter: blur(12px); }
+
+/* 30. Supernova */
+.fx-supernova::before { inset: -26px; background: radial-gradient(circle, #ffffff 10%, #ffd166 40%, #ff007f 70%, transparent 85%); animation: fxPulseSoft 1.5s infinite alternate; filter: blur(14px); }
+
+/* 31. Retro Wave */
+.fx-retro-wave::before { inset: -22px; background: linear-gradient(180deg, #ff007f, #00f0ff); animation: var(--fx-cw) 6s linear infinite; filter: blur(10px); opacity: 0.85; }
+
+/* 32. Halo Amber */
+.fx-halo-amber::before { inset: -22px; background: radial-gradient(circle, #ff9100 20%, rgba(255,145,0,0.2) 60%, transparent 75%); animation: fxPulseSoft 2.4s infinite alternate; filter: blur(12px); }
+
+/* 33. Eclipse Corona */
+.fx-eclipse::before { inset: -20px; background: conic-gradient(from 0deg, transparent 0deg 280deg, #ffffff 320deg, #ffd166 360deg); animation: var(--fx-cw) 3s linear infinite; filter: blur(8px); }
+
+/* 34. Cyber Grid */
+.fx-cyber-grid::before { inset: -22px; background: repeating-linear-gradient(45deg, var(--cyan) 0px, var(--cyan) 2px, transparent 3px, transparent 10px); animation: var(--fx-cw) 12s linear infinite; filter: blur(4px); opacity: 0.8; }
+
+/* 35. Neon Heartbeat */
+@keyframes fxHeartbeat { 0%, 100% { transform: scale(0.96); } 15% { transform: scale(1.15); filter: drop-shadow(0 0 20px #ff0055); } 30% { transform: scale(1.02); } 45% { transform: scale(1.22); filter: drop-shadow(0 0 25px #ff0055); } }
+.fx-neon-heartbeat::before { inset: -22px; background: radial-gradient(circle, #ff0055 30%, transparent 70%); animation: fxHeartbeat 1.8s infinite; filter: blur(12px); }
+
+/* 36. Starlight */
+.fx-starlight::before { inset: -24px; background: conic-gradient(from 0deg, #fff 0deg, transparent 45deg, #63f6ff 90deg, transparent 135deg, #fff 180deg, transparent 225deg, #ffd166 270deg, transparent 315deg, #fff 360deg); animation: var(--fx-cw) 7s linear infinite; filter: blur(8px); opacity: 0.9; }
+
+/* 37. Liquid Gold */
+.fx-liquid-gold::before { inset: -22px; background: conic-gradient(from 0deg, #ffd166, #ff9100, #ffea00, #ffd166); animation: fxMorph71 5s ease-in-out infinite alternate; filter: blur(10px); }
+
+/* 38. Hologram Scanner */
+@keyframes fxScanSweep { 0% { transform: translateY(-30px); opacity: 0; } 50% { opacity: 1; } 100% { transform: translateY(30px); opacity: 0; } }
+.fx-hologram::before { inset: -20px; background: linear-gradient(180deg, transparent, var(--cyan), transparent); animation: fxScanSweep 2s ease-in-out infinite; filter: blur(6px); }
+
+/* 39. Plasma Orb */
+.fx-plasma-orb::before { inset: -24px; background: conic-gradient(from 120deg, #9900ff, #00f0ff, #ff007f, #9900ff); animation: var(--fx-ccw) 3s linear infinite; filter: blur(12px); opacity: 0.9; }
+
+/* 40. Warp Speed */
+.fx-warp-speed::before { inset: -24px; background: radial-gradient(circle, #fff 10%, var(--cyan) 40%, transparent 70%); animation: fxMultiPulse 1.2s infinite; filter: blur(10px); }
+
+/* 41. Golden Rays */
+.fx-golden-rays::before { inset: -22px; background: repeating-conic-gradient(from 0deg, #ffd166 0deg 15deg, transparent 15deg 30deg); animation: var(--fx-cw) 9s linear infinite; filter: blur(6px); opacity: 0.85; }
+
+/* 42. Diamond Cut */
+.fx-diamond-cut::before { inset: -22px; background: conic-gradient(from 45deg, #b9f2ff, #ffffff, #63f6ff, #ffffff, #b9f2ff); animation: var(--fx-cw) 4s linear infinite; filter: blur(8px); opacity: 0.95; }
+
+/* 43. Bass Thump Wave */
+@keyframes fxBassThump { 0%, 100% { transform: scale(0.92); opacity: 0.6; } 30% { transform: scale(1.22); opacity: 1; filter: drop-shadow(0 0 25px var(--magenta)); } }
+.fx-bass-thump::before { inset: -24px; background: radial-gradient(circle, var(--magenta) 0%, transparent 70%); animation: fxBassThump 1.4s ease-out infinite; filter: blur(12px); }
+
+/* 44. Northern Glow */
+.fx-northern-glow::before { inset: -22px; background: conic-gradient(from 0deg, #00e676, #00e5ff, #1de9b6, #00e676); animation: var(--fx-cw) 7s linear infinite; filter: blur(12px); opacity: 0.85; }
+
+/* 45. Glass Shimmer */
+.fx-glass-shimmer::before { inset: -20px; background: linear-gradient(135deg, rgba(255,255,255,0.6) 0%, transparent 50%, rgba(255,255,255,0.6) 100%); animation: var(--fx-cw) 5s linear infinite; filter: blur(6px); }
+
+/* 46. Vinyl Grooves */
+.fx-vinyl-grooves::before {
+    inset: -24px;
+    background: repeating-radial-gradient(circle, rgba(255,255,255,0.25) 0, rgba(255,255,255,0.25) 1px, transparent 2px, transparent 5px),
+                conic-gradient(from 45deg, rgba(255,255,255,0.15), transparent 25%, rgba(255,255,255,0.15) 50%, transparent 75%, rgba(255,255,255,0.15));
+    animation: var(--fx-cw) 7s linear infinite;
+    border-radius: 50%; opacity: 0.85; filter: drop-shadow(0 0 10px rgba(0,0,0,0.8));
+}
+
+/* 47. Laser Sweep */
+.fx-laser-sweep::before { inset: -24px; background: conic-gradient(from 0deg, transparent 0deg 320deg, #00e676 360deg); animation: var(--fx-cw) 2.4s linear infinite; filter: blur(6px); }
+
+/* 48. EQ Overlay */
+.fx-eq-overlay::before { inset: -22px; background: repeating-linear-gradient(0deg, var(--gold) 0px, var(--gold) 2px, transparent 3px, transparent 8px); animation: fxStreepjesMove 2s infinite, var(--fx-cw) 10s linear infinite; filter: blur(4px); opacity: 0.8; }
+
+/* 49. Cassette Spools */
+.fx-cassette::before { inset: -22px; background: repeating-conic-gradient(from 0deg, #fff 0deg 30deg, transparent 30deg 60deg); animation: var(--fx-cw) 3s linear infinite; filter: blur(6px); opacity: 0.8; }
+
+/* 50. Cyber Crosshair */
+.fx-crosshair::before { inset: -20px; border: 2px dashed var(--cyan); border-radius: 50%; animation: var(--fx-cw) 8s linear infinite; filter: drop-shadow(0 0 6px var(--cyan)); }
+
+/* 51. Gold Corners */
+.fx-gold-corners::before { inset: -22px; background: conic-gradient(from 45deg, #ffd166 0deg 30deg, transparent 30deg 90deg, #ffd166 90deg 120deg, transparent 120deg 180deg, #ffd166 180deg 210deg, transparent 210deg 270deg, #ffd166 270deg 300deg, transparent 300deg 360deg); animation: var(--fx-cw) 6s linear infinite; filter: blur(6px); }
+
+/* 52. Frost Glass */
+.fx-frost::before { inset: -22px; background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(99,246,255,0.3) 60%, transparent 75%); animation: fxPulseSoft 3.5s infinite alternate; filter: blur(14px); }
+
+/* 53. Neon Gridline */
+.fx-neon-grid::before { inset: -22px; background: repeating-linear-gradient(90deg, #ff007f 0px, #ff007f 2px, transparent 3px, transparent 12px); animation: var(--fx-cw) 8s linear infinite; filter: blur(5px); opacity: 0.85; }
+
+/* 54. Solar Flare */
+.fx-solar::before { inset: -26px; background: radial-gradient(circle, #ffea00 10%, #ff5e00 50%, transparent 75%); animation: fxFireRingFlicker 3s infinite alternate; filter: blur(12px); }
+
+/* 55. Silver Liquid */
+.fx-silver-liquid::before { inset: -22px; background: conic-gradient(from 0deg, #e0e0e0, #ffffff, #9e9e9e, #ffffff, #e0e0e0); animation: fxMorph71 5s infinite; filter: blur(8px); }
+
+/* 56. Vinyl Dust */
+.fx-vinyl-dust::before { inset: -22px; background: radial-gradient(circle, rgba(255,255,255,0.4) 10%, transparent 20%); background-size: 15px 15px; animation: var(--fx-cw) 10s linear infinite; filter: blur(3px); }
+
+/* 57. Emerald Pulse */
+.fx-emerald::before { inset: -24px; background: radial-gradient(circle, #00e676 0%, rgba(0,230,118,0.2) 60%, transparent 75%); animation: fxPulseSoft 2s infinite alternate; filter: blur(12px); }
+
+/* 58. Sunset Halo */
+.fx-sunset-halo::before { inset: -24px; background: conic-gradient(from 0deg, #ff1744, #ff9100, #7928ca, #ff1744); animation: var(--fx-cw) 6s linear infinite; filter: blur(12px); opacity: 0.85; }
+
+/* 59. Electric Arc */
+.fx-electric::before { inset: -22px; background: radial-gradient(circle, #ffffff 0%, var(--cyan) 50%, transparent 75%); animation: fxLightning 1.8s infinite; filter: blur(4px); }
+
+/* 60. Cosmic Dust */
+.fx-cosmic::before { inset: -24px; background: conic-gradient(from 0deg, #7928ca, #00f0ff, #ff007f, #7928ca); animation: var(--fx-cw) 8s linear infinite; filter: blur(12px); opacity: 0.85; }
+
+/* 61. Smoked Glass */
+.fx-smoked-glass::before { inset: -22px; background: radial-gradient(circle, rgba(50,50,70,0.8) 0%, transparent 70%); animation: fxPulseSoft 4s infinite alternate; filter: blur(14px); }
+
+/* 62. Vinyl Jacket */
+.fx-vinyl-jacket::before { inset: -24px; border: 3px solid rgba(255,255,255,0.4); border-radius: 12px; animation: fxPulseSoft 3s infinite alternate; filter: drop-shadow(0 0 10px rgba(0,0,0,0.8)); }
+
+/* 63. Studio Backglow */
+.fx-studio-backglow::before { inset: -26px; background: radial-gradient(circle, var(--gold) 0%, rgba(255,209,102,0.3) 50%, transparent 75%); animation: fxPulseSoft 2.8s infinite alternate; filter: blur(16px); }
+
+/* 64. Gallery Corners */
+.fx-gallery-corners::before { inset: -20px; border: 2px solid var(--gold); border-radius: 4px; animation: fxPulseSoft 3s infinite alternate; filter: drop-shadow(0 0 8px var(--gold)); }
+
+/* 65. Audio Wave Ribbon */
+.fx-wave-ribbon::before { inset: -24px; background: conic-gradient(from 0deg, var(--cyan), transparent 60deg, var(--magenta) 180deg, transparent 240deg, var(--cyan) 360deg); animation: var(--fx-cw) 4s linear infinite; filter: blur(10px); }
+
+/* 66. Holo Foil */
+.fx-holo-foil::before {
+    inset: -22px;
+    background: conic-gradient(from 0deg, #ff0080, #ff8c00, #40e0d0, #7b68ee, #ff0080);
+    animation: fxCdShinyShimmer 4s linear infinite;
+    border-radius: 50%; opacity: 0.9; filter: blur(6px) drop-shadow(0 0 12px rgba(255,255,255,0.7));
+}
+.fx-holo-foil::after {
+    inset: -14px;
+    background: radial-gradient(circle, rgba(255,255,255,0.5) 0%, transparent 70%);
+    animation: fxPulseSoft 2s infinite alternate;
+    border-radius: 50%;
+}
+
+/* 67. Velvet Vignette */
+.fx-velvet-vignette::before { inset: -24px; background: radial-gradient(circle, rgba(121,40,202,0.7) 0%, transparent 75%); animation: fxPulseSoft 3s infinite alternate; filter: blur(14px); }
+
+/* 68. Spindle Center */
+.fx-spindle::before {
+    inset: -22px;
+    background: repeating-conic-gradient(from 0deg, #ffd166 0deg 10deg, #120d27 10deg 20deg, var(--cyan) 20deg 30deg, #120d27 30deg 40deg);
+    animation: var(--fx-cw) 5s linear infinite;
+    border-radius: 50%; opacity: 0.9; filter: drop-shadow(0 0 8px var(--gold));
+}
+.fx-spindle::after {
+    inset: -10px;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    animation: var(--fx-ccw) 3s linear infinite;
+}
+
+/* 69. Vinyl Record 360 */
+.fx-vinyl-record::before {
+    inset: -24px;
+    background: repeating-radial-gradient(circle, #222 0, #222 2px, #05060d 3px, #05060d 5px),
+                conic-gradient(from 45deg, rgba(255,255,255,0.2), transparent 25%, rgba(255,255,255,0.2) 50%, transparent 75%, rgba(255,255,255,0.2));
+    animation: var(--fx-cw) 6s linear infinite;
+    border-radius: 50%; opacity: 0.95; filter: drop-shadow(0 0 12px rgba(0,0,0,0.9));
+}
+
+/* 70. Compact Disc Reflect */
+.fx-compact-disc::before {
+    inset: -22px;
+    background: conic-gradient(from 0deg, rgba(255,0,0,0.7), rgba(255,255,0,0.7), rgba(0,255,0,0.7), rgba(0,255,255,0.7), rgba(0,0,255,0.7), rgba(255,0,255,0.7), rgba(255,0,0,0.7));
+    animation: fxCdShinyShimmer 4s linear infinite;
+    border-radius: 50%; opacity: 0.88; filter: blur(6px) drop-shadow(0 0 15px rgba(255,255,255,0.6));
+}
+.fx-compact-disc::after {
+    inset: -12px;
+    background: conic-gradient(from 180deg, transparent 0deg 40deg, rgba(255,255,255,0.85) 45deg, transparent 50deg 220deg, rgba(255,255,255,0.85) 225deg, transparent 230deg 360deg);
+    animation: var(--fx-cw) 3s linear infinite;
+    border-radius: 50%; opacity: 0.75;
+}
+
+/* 71. Morphing Plasma */
+.fx-morph-fire::before { inset: -22px; background: conic-gradient(from 0deg, #ff0055, #ff5e00, #ffea00, #9900ff, #ff0055); animation: fxMorph71 5s linear infinite; filter: blur(8px); opacity: 0.9; }
+.fx-morph-fire::after { inset: -14px; background: radial-gradient(circle, #ff007f 0%, #00f0ff 60%, transparent 80%); animation: fxPulseSoft 2.5s ease-in-out infinite alternate; filter: blur(10px); opacity: 0.75; }
+
+/* 72. Rebel Wild Fire */
+.fx-wild-fire::before { inset: -26px; background: conic-gradient(from 45deg, #ff1744 0deg, #ff9100 90deg, #ffea00 180deg, #d50000 270deg, #ff1744 360deg); animation: fxFire72 4s ease-in-out infinite alternate; border-radius: 45% 55% 60% 40% / 50% 45% 55% 50%; opacity: 0.95; }
+.fx-wild-fire::after { inset: -16px; background: conic-gradient(from 180deg, #ff3d00, #ffd600, #ff1744, #ff3d00); animation: var(--fx-cw) 2.8s linear infinite; filter: blur(10px); opacity: 0.85; }
+
+/* 73. Streepjes */
+.fx-streepjes::before { inset: -20px; background: repeating-linear-gradient(0deg, var(--cyan) 0px, var(--cyan) 3px, transparent 4px, transparent 8px); animation: fxStreepjesMove 1.5s ease-in-out infinite, var(--fx-cw) 12s linear infinite; opacity: 0.8; filter: blur(3px); }
+
+/* 74. Onweer */
+.fx-onweer::before { inset: -24px; background: radial-gradient(circle, #ffffff 0%, var(--cyan) 40%, transparent 75%); animation: fxLightning 2.8s infinite; z-index: 1; }
+
+/* 75. Draai Waaier */
+.fx-draai-waaier::before { inset: -22px; background: conic-gradient(from 0deg, transparent 0deg, var(--cyan) 60deg, transparent 120deg, var(--magenta) 180deg, transparent 240deg, var(--gold) 300deg, transparent 360deg); animation: var(--fx-fan-cw) 4s linear infinite; filter: blur(8px); }
+.fx-draai-waaier::after { inset: -16px; background: repeating-conic-gradient(from 0deg, var(--violet) 0deg 15deg, transparent 15deg 30deg); animation: var(--fx-fan-ccw) 3s linear infinite; filter: blur(5px); opacity: 0.7; }
+
+/* 76. Strobe Laser */
+.fx-strobe-laser::before { inset: -26px; background: conic-gradient(from 45deg, #00ffff 0deg, transparent 20deg, #ff007f 90deg, transparent 110deg, #ffff00 180deg, transparent 200deg, #00ffff 360deg); animation: var(--fx-cw) 1.8s linear infinite; filter: blur(10px); opacity: 0.9; }
+
+/* 77. Rain Curtain */
+.fx-rain-curtain::before { inset: -20px; background: linear-gradient(180deg, transparent 0%, var(--cyan) 50%, var(--magenta) 100%); animation: fxRainDrop 1.2s linear infinite, fxPulseSoft 3s infinite; filter: blur(7px); opacity: 0.85; }
+
+/* 78. Cyber Spiral */
+.fx-cyber-spiral::before { inset: -22px; background: repeating-radial-gradient(circle, var(--cyan) 0, var(--cyan) 4px, transparent 5px, transparent 12px); animation: fxHypnoPulse 4s ease-in-out infinite; filter: blur(4px); }
+
+/* 79. Hypno Rings */
+.fx-hypno-rings::before { inset: -24px; background: conic-gradient(from 0deg, red, yellow, lime, cyan, blue, magenta, red); animation: var(--fx-cw) 3.5s linear infinite, fxHypnoPulse 3s infinite alternate; filter: blur(12px); opacity: 0.85; }
+
+/* 80. Super Disco */
+.fx-super-disco::before { inset: -25px; background: conic-gradient(from 0deg, #ff0055, #00e5ff, #ffee00, #ff0055); animation: var(--fx-cw) 1.2s linear infinite; filter: blur(14px); opacity: 0.95; }
+
+/* 81. Quantum Dots */
+.fx-quantum-dots::before { inset: -20px; background: radial-gradient(circle, var(--cyan) 10%, transparent 20%), radial-gradient(circle, var(--gold) 10%, transparent 20%); background-size: 20px 20px; background-position: 0 0, 10px 10px; animation: var(--fx-cw) 8s linear infinite; filter: blur(5px); opacity: 0.85; }
+
+/* 82. Fan 360 */
+.fx-fan-360::before { inset: -22px; background: conic-gradient(from 0deg, transparent 0deg, var(--cyan) 90deg, transparent 180deg, var(--gold) 270deg, transparent 360deg); animation: var(--fx-fan-cw) 2s linear infinite; filter: blur(9px); }
+
+
+/* FRAME LIGHTING MODES (WATERVAL / RAIN CURTAIN, PULSE GLOW, DISCO) */
+@keyframes rainCurtainFall {
+    0% { background-position: 0 0; }
+    100% { background-position: 0 400px; }
+}
+@keyframes pulseGlowBreathe {
+    0%, 100% { opacity: 0.4; filter: drop-shadow(0 0 5px var(--cyan)); }
+    50% { opacity: 1; filter: drop-shadow(0 0 20px var(--cyan)) drop-shadow(0 0 35px var(--magenta)); }
+}
+@keyframes discoSpectrumCycle {
+    0% { filter: hue-rotate(0deg); }
+    100% { filter: hue-rotate(360deg); }
+}
+
+
+
+        /* 6 NIEUWE EXTRA FRAME EFFECTEN (Sneeuw, Vonken, Waterval, Laser, Aurora, Matrix) */
+        @keyframes fxSnowFall { 0% { background-position: 0 0, 0 0; } 100% { background-position: 50px 300px, -40px 200px; } }
+        @keyframes fxGoldenSparks { 0% { filter: drop-shadow(0 0 4px #ffd166) hue-rotate(0deg); opacity: 0.7; } 50% { filter: drop-shadow(0 0 16px #ff9100) hue-rotate(30deg); opacity: 1; } 100% { filter: drop-shadow(0 0 4px #ffd166) hue-rotate(0deg); opacity: 0.7; } }
+        @keyframes fxWaterfallRun { 0% { background-position: 0 -200px; } 100% { background-position: 0 400px; } }
+        @keyframes fxLaserSweep { 0% { background-position: 0 0; } 50% { background-position: 100% 100%; } 100% { background-position: 0 0; } }
+        @keyframes fxAuroraBreathe { 0%, 100% { opacity: 0.5; filter: blur(4px) drop-shadow(0 0 8px var(--cyan)); } 50% { opacity: 0.95; filter: blur(2px) drop-shadow(0 0 18px var(--magenta)); } }
+        @keyframes fxMatrixCode { 0% { background-position: 0 0; } 100% { background-position: 0 350px; } }
+
+        .frame-snow-dots {
+            background-image: radial-gradient(2px 2px at 20px 30px, #ffffff, transparent),
+                              radial-gradient(3px 3px at 40px 70px, var(--cyan), transparent),
+                              radial-gradient(1.5px 1.5px at 90px 40px, #ffffff, transparent);
+            background-size: 100px 100px, 120px 120px, 80px 80px;
+            animation: fxSnowFall 3s linear infinite;
+        }
+        .frame-golden-sparks {
+            background: conic-gradient(from 45deg, #ffd166, #ff9100, #ffea00, #ff5bc8, #ffd166);
+            animation: fxGoldenSparks 3s ease-in-out infinite alternate;
+        }
+        .frame-neon-waterfall {
+            background: linear-gradient(180deg, transparent 0%, var(--cyan) 60%, var(--magenta) 100%);
+            background-size: 100% 180px;
+            animation: fxWaterfallRun 1.5s linear infinite;
+        }
+        .frame-laser-radar {
+            background: linear-gradient(90deg, transparent 0%, #00e676 50%, transparent 100%);
+            background-size: 200% 200%;
+            animation: fxLaserSweep 2s ease-in-out infinite;
+        }
+        .frame-breathing-aurora {
+            /* Alleen de ademing op de rand zelf; het draaien gebeurt in de binnenlaag, zodat de gemaskeerde rand en hoeken niet mee-roteren. */
+            animation: fxAuroraBreathe 3s ease-in-out infinite;
+        }
+        .frame-aurora-spin {
+            position: absolute; inset: -50%; width: 200%; height: 200%;
+            background: conic-gradient(from 180deg, var(--cyan), var(--violet), var(--magenta), var(--cyan));
+            animation: chaserSpin 10s linear infinite;
+            pointer-events: none !important;
+        }
+        .frame-cyber-matrix {
+            background: repeating-linear-gradient(0deg, #00e676 0px, transparent 4px, transparent 12px);
+            background-size: 100% 80px;
+            animation: fxMatrixCode 2s linear infinite;
+        }
+
+
+
+/* Compacte frame-effect previews voor de studio (90 × 56 px). */
+.cmb-effect-preview-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(90px,1fr)); gap:10px; align-items:start; }
+.cmb-effect-preview { width:90px; height:56px; box-sizing:border-box; position:relative; overflow:hidden; border:1px solid rgba(255,255,255,.25); border-radius:8px; background:linear-gradient(135deg,#0b1020,#202441); }
+.cmb-effect-preview::before { content:""; position:absolute; inset:3px; border:2px solid var(--preview-color,#63f6ff); border-radius:5px; pointer-events:none; }
+.cmb-effect-preview.is-rain::before { border-color:transparent; background:repeating-linear-gradient(180deg,transparent 0 5px,rgba(99,246,255,.85) 6px,transparent 8px); -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0); -webkit-mask-composite:xor; mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0); mask-composite:exclude; padding:3px; }
+.cmb-effect-preview.is-neon::before { border-color:#ff5bc8; box-shadow:inset 0 0 7px #ff5bc8,0 0 8px #63f6ff; }
+.cmb-effect-preview-label { font-size:10px; line-height:1.25; color:#a8aac8; margin-top:4px; max-width:90px; overflow-wrap:anywhere; }
+
+
+/* Frame-effect keuzetegels (90 × 56 px) met echte, gemaskeerde rand-animatie. */
+.cmb-frame-tile-grid { display:flex; flex-wrap:wrap; gap:10px; margin-top:12px; }
+.cmb-frame-tile-wrap { width:90px; }
+.cmb-frame-tile { --cyan:#63f6ff; --magenta:#ff5bc8; --violet:#7928ca; --gold:#ffd166;
+    width:90px; height:56px; padding:0; margin:0; position:relative; display:block; overflow:hidden; box-sizing:border-box;
+    border:1px solid rgba(255,255,255,.2); border-radius:8px; background:linear-gradient(135deg,#0b1020,#202441); cursor:pointer; }
+.cmb-frame-tile.is-selected { outline:2px solid #ffd166; outline-offset:1px; }
+.cmb-frame-tile .frame-chaser-layer, .cmb-frame-tile [class^="frame-"], .cmb-frame-tile [class*=" frame-"] { border-radius:inherit; }
+.cmb-frame-tile-label { font-size:10px; line-height:1.25; color:#a8aac8; margin-top:4px; overflow-wrap:anywhere; }
+
+
+/* ==========================================================================
+   NIEUWE FRAME EFFECTEN: Sneeuwrand, Vuurrand, Regenboog Run, Confetti,
+   Gouden Glans, Elektrische Puls. Allemaal holle, gemaskeerde randen
+   (padding = dikte, mask-composite: exclude), zonder clip-path.
+   ========================================================================== */
+.frame-snow-edge,
+.frame-fire-edge,
+.frame-rainbow-run,
+.frame-confetti-edge,
+.frame-gold-shimmer,
+.frame-electric-pulse {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit !important;
+    padding: 3px;
+    pointer-events: none !important;
+    z-index: 15;
+    box-sizing: border-box;
+    overflow: hidden;
+    clip-path: none !important;
+    -webkit-mask-image: linear-gradient(#fff 0 0), linear-gradient(#fff 0 0);
+    -webkit-mask-origin: border-box, content-box;
+    -webkit-mask-clip: border-box, content-box;
+    -webkit-mask-composite: xor;
+    mask-image: linear-gradient(#fff 0 0), linear-gradient(#fff 0 0);
+    mask-origin: border-box, content-box;
+    mask-clip: border-box, content-box;
+    mask-composite: exclude;
+    transform: translateZ(0);
+}
+
+@keyframes fxSnowEdgeFall {
+    to { background-position: 100px 100px, -80px 80px, 120px 120px, -90px 90px, 70px 70px; }
+}
+@keyframes fxConfettiFall {
+    to { background-position: 0 120px, 0 90px, 0 150px, 0 100px, 0 80px, 0 130px; }
+}
+@keyframes fxFireUp { to { background-position: 0 -52px; } }
+@keyframes fxFireFlicker { from { filter: brightness(1) saturate(1); } to { filter: brightness(1.35) saturate(1.25); } }
+@keyframes fxRainbowRun { to { background-position: 396px 0; } }
+@keyframes fxGoldShimmer { from { background-position: 100% 0; } to { background-position: 0% 0; } }
+@keyframes fxElectricPulse { to { background-position: 57px 0; } }
+@keyframes fxElectricFlicker { 0%, 100% { opacity: 1; } 45% { opacity: .55; } 60% { opacity: .95; } 75% { opacity: .4; } }
+
+.frame-snow-edge {
+    background-color: rgba(170, 225, 255, 0.10);
+    background-image:
+        radial-gradient(3px 3px at 10px 20px, #ffffff, transparent),
+        radial-gradient(2px 2px at 30px 60px, #ffffff, transparent),
+        radial-gradient(4px 4px at 55px 35px, rgba(255,255,255,.9), transparent),
+        radial-gradient(2px 2px at 75px 80px, #cfefff, transparent),
+        radial-gradient(3px 3px at 40px 10px, #ffffff, transparent);
+    background-size: 100px 100px, 80px 80px, 120px 120px, 90px 90px, 70px 70px;
+    animation: fxSnowEdgeFall 7s linear infinite;
+}
+.frame-confetti-edge {
+    background-image:
+        radial-gradient(3px 3px at 12px 20px, #ff5bc8, transparent),
+        radial-gradient(3px 3px at 40px 50px, #63f6ff, transparent),
+        radial-gradient(3px 3px at 70px 15px, #ffd166, transparent),
+        radial-gradient(3px 3px at 25px 85px, #00e676, transparent),
+        radial-gradient(3px 3px at 85px 60px, #ff1744, transparent),
+        radial-gradient(3px 3px at 55px 95px, #9d6cff, transparent);
+    background-size: 100px 100px, 90px 90px, 110px 110px, 100px 100px, 80px 80px, 120px 120px;
+    animation: fxConfettiFall 5s linear infinite;
+}
+.frame-fire-edge {
+    background: repeating-linear-gradient(0deg, #ff1744 0px, #ff9100 14px, #ffea00 26px, #ff9100 38px, #ff1744 52px);
+    background-size: 100% 52px;
+    animation: fxFireUp 1.3s linear infinite, fxFireFlicker .25s steps(2, end) infinite alternate;
+}
+.frame-rainbow-run {
+    background: repeating-linear-gradient(45deg, #ff0000 0px, #ff9100 40px, #ffee00 80px, #00e676 120px, #00e5ff 160px, #2979ff 200px, #ff00ff 240px, #ff0000 280px);
+    animation: fxRainbowRun 4s linear infinite;
+}
+.frame-gold-shimmer {
+    background: linear-gradient(110deg, #7a5a00 0%, #ffd166 25%, #fff6c8 40%, #ffd166 55%, #7a5a00 100%);
+    background-size: 250% 100%;
+    animation: fxGoldShimmer 3s linear infinite;
+}
+.frame-electric-pulse {
+    background: repeating-linear-gradient(45deg, #63f6ff 0px, #63f6ff 10px, transparent 10px, transparent 20px, #ff5bc8 20px, #ff5bc8 30px, transparent 30px, transparent 40px);
+    animation: fxElectricPulse 1s steps(8) infinite, fxElectricFlicker 1.4s linear infinite;
+}
+
+/* Rustiger voor mensen die minder beweging willen */
+@media (prefers-reduced-motion: reduce) {
+    .frame-snow-edge, .frame-fire-edge, .frame-rainbow-run, .frame-confetti-edge,
+    .frame-gold-shimmer, .frame-electric-pulse { animation-duration: 40s !important; }
+}
+
+
+/* ==========================================================================
+   NIEUWE COVER EFFECTEN 83 T/M 92
+   ========================================================================== */
+@keyframes fxSunPulse { 0%, 100% { opacity: .65; } 50% { opacity: 1; } }
+@keyframes fxFireflyDrift { 0% { transform: rotate(0deg) scale(1); } 50% { transform: rotate(180deg) scale(1.06); } 100% { transform: rotate(360deg) scale(1); } }
+@keyframes fxOrbitFade { 0%, 100% { opacity: .55; } 50% { opacity: 1; } }
+
+/* 83. Sunburst Zonnestralen */
+.fx-sunburst::before { inset: -28px; background: repeating-conic-gradient(from 0deg, rgba(255,209,102,.9) 0deg 6deg, transparent 6deg 18deg); filter: blur(2px); animation: var(--fx-cw) 16s linear infinite, fxSunPulse 3s ease-in-out infinite; }
+.fx-sunburst::after { inset: -14px; background: radial-gradient(circle, rgba(255,246,200,.55) 0%, transparent 70%); filter: blur(8px); animation: fxPulseSoft 3s ease-in-out infinite alternate; }
+
+/* 84. Orbit Stippen Dubbel */
+.fx-orbit-dots::before { inset: -20px; border: 4px dotted var(--cyan); animation: var(--fx-cw) 9s linear infinite, fxOrbitFade 3s ease-in-out infinite; filter: drop-shadow(0 0 6px var(--cyan)); }
+.fx-orbit-dots::after { inset: -34px; border: 4px dotted var(--magenta); animation: var(--fx-ccw) 13s linear infinite, fxOrbitFade 3s ease-in-out infinite 1.5s; filter: drop-shadow(0 0 6px var(--magenta)); }
+
+/* 85. IJskristal Glans */
+.fx-ice-crystal::before { inset: -24px; background: conic-gradient(from 0deg, #ffffff, #b9f2ff, #63f6ff, #ffffff, #b9f2ff, #ffffff); filter: blur(7px); opacity: .9; animation: var(--fx-cw) 11s linear infinite; }
+.fx-ice-crystal::after { inset: -12px; background: radial-gradient(circle, rgba(255,255,255,.75) 0%, rgba(185,242,255,.25) 60%, transparent 75%); filter: blur(5px); animation: fxPulseSoft 4s ease-in-out infinite alternate; }
+
+/* 86. Lava Lamp Blobs */
+.fx-lava-lamp::before { inset: -26px; background: radial-gradient(circle at 30% 30%, #ff5bc8, transparent 55%), radial-gradient(circle at 70% 70%, #ffd166, transparent 55%), radial-gradient(circle at 70% 25%, #ff1744, transparent 50%); filter: blur(10px); opacity: .9; animation: fxMorph71 7s ease-in-out infinite alternate; }
+.fx-lava-lamp::after { inset: -16px; background: radial-gradient(circle at 60% 40%, rgba(255,145,0,.6), transparent 60%); filter: blur(12px); animation: fxMorph71 9s ease-in-out infinite alternate-reverse; }
+
+/* 87. RGB Split Glitch */
+.fx-rgb-split::before { inset: -18px; border: 3px solid rgba(255,0,80,.85); mix-blend-mode: screen; animation: fxPulseSoft 1.6s ease-in-out infinite alternate, fxGlitch 2.2s infinite; }
+.fx-rgb-split::after { inset: -18px; border: 3px solid rgba(0,229,255,.85); mix-blend-mode: screen; animation: fxPulseSoft 1.6s ease-in-out infinite alternate-reverse, fxGlitch 2.2s infinite reverse; }
+
+/* 88. Vuurvliegjes Cirkel */
+.fx-firefly::before { inset: -26px; background:
+    radial-gradient(circle at 50% 4%, #fff7b0 0 3px, transparent 4px),
+    radial-gradient(circle at 92% 30%, #ffe066 0 2px, transparent 3px),
+    radial-gradient(circle at 80% 86%, #fff7b0 0 3px, transparent 4px),
+    radial-gradient(circle at 22% 90%, #ffe066 0 2px, transparent 3px),
+    radial-gradient(circle at 6% 38%, #fff7b0 0 3px, transparent 4px);
+    filter: drop-shadow(0 0 6px #ffe066); animation: fxFireflyDrift 12s linear infinite; }
+.fx-firefly::after { inset: -38px; background:
+    radial-gradient(circle at 70% 6%, #ffffff 0 2px, transparent 3px),
+    radial-gradient(circle at 96% 62%, #ffe066 0 3px, transparent 4px),
+    radial-gradient(circle at 36% 96%, #ffffff 0 2px, transparent 3px),
+    radial-gradient(circle at 3% 60%, #ffe066 0 3px, transparent 4px);
+    filter: drop-shadow(0 0 6px #fff7b0); animation: var(--fx-ccw) 19s linear infinite; }
+
+/* 89. Roze Halo Puls */
+.fx-pink-halo::before { inset: -26px; background: radial-gradient(circle, rgba(255,91,200,.95) 0%, rgba(255,91,200,.25) 55%, transparent 75%); filter: blur(12px); animation: fxPulseSoft 2.2s ease-in-out infinite alternate; }
+.fx-pink-halo::after { inset: -12px; border: 2px solid rgba(255,182,235,.9); filter: drop-shadow(0 0 8px #ff5bc8); animation: fxRippleWave 2.6s ease-out infinite; }
+
+/* 90. Oceaan Golf */
+.fx-ocean-wave::before { inset: -24px; background: conic-gradient(from 90deg, #00e5ff, #2979ff, #00b0ff, #1de9b6, #00e5ff); filter: blur(11px); opacity: .85; animation: var(--fx-cw) 9s linear infinite; }
+.fx-ocean-wave::after { inset: -14px; border: 2px solid rgba(150,240,255,.9); animation: fxRippleWave 3s ease-out infinite; }
+
+/* 91. Galaxy Swirl */
+.fx-galaxy-swirl::before { inset: -26px; background: conic-gradient(from 0deg, #7928ca, #ff0080, #0070f3, #00e5ff, #7928ca); filter: blur(12px); opacity: .9; animation: var(--fx-ccw) 6s linear infinite; }
+.fx-galaxy-swirl::after { inset: -16px; background: repeating-conic-gradient(from 0deg, rgba(255,255,255,.9) 0deg 1deg, transparent 1deg 14deg); filter: blur(1px); animation: var(--fx-cw) 22s linear infinite; }
+
+/* 92. Dubbele Gouden Ringen */
+.fx-double-ring-gold::before { inset: -18px; border: 3px solid #ffd166; filter: drop-shadow(0 0 8px #ffb300); animation: fxPulseSoft 2.8s ease-in-out infinite alternate; }
+.fx-double-ring-gold::after { inset: -30px; border: 2px dashed #fff6c8; filter: drop-shadow(0 0 6px #ffd166); animation: var(--fx-ccw) 12s linear infinite; }
+
+/* ==========================================================================
+   STREAM UITKLAP (verschijnt als stream 1 uitvalt) EN CLIP-WEERGAVE
+   ========================================================================== */
+.cmb-stream-flyout {
+    position: absolute; top: 64px; left: 12px; right: 12px; z-index: 70;
+    background: rgba(8, 10, 24, .96); border: 1px solid rgba(255, 209, 102, .55); border-radius: 14px;
+    padding: 10px 12px; box-shadow: 0 14px 40px rgba(0,0,0,.7);
+    opacity: 0; transform: translateY(-8px); pointer-events: none; transition: opacity .25s ease, transform .25s ease;
+}
+.cmb-stream-flyout.open { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.cmb-stream-flyout-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 8px; color: #ffd166; font-size: 12px; font-weight: 800; letter-spacing: .02em; }
+.cmb-stream-flyout-head button { background: transparent; border: none; color: #a8aac8; font-size: 16px; cursor: pointer; padding: 0 4px; }
+.cmb-stream-flyout-list { display: flex; flex-direction: column; gap: 6px; max-height: 210px; overflow-y: auto; }
+.cmb-stream-item { display: flex; align-items: center; gap: 8px; width: 100%; text-align: left; background: #12162f; color: #fff; border: 1px solid rgba(255,255,255,.12); border-radius: 9px; padding: 8px 10px; font-size: 12px; font-weight: 700; cursor: pointer; }
+.cmb-stream-item:hover { border-color: #63f6ff; }
+.cmb-stream-item.active { border-color: #00e676; color: #00e676; }
+.cmb-stream-item small { margin-left: auto; color: #a8aac8; font-weight: 600; }
+
+#slide-bg-mount.is-clip video, #slide-bg-mount.is-clip iframe { width: 100%; height: 100%; border: 0; object-fit: contain; background: #000; display: block; }
+
+
+/* ==========================================================================
+   SEIZOENSDECOR OP FRAMES (losse laag boven de animatie; geen clip-path)
+   ========================================================================== */
+.cmb-season { position:absolute; inset:0; z-index:17; pointer-events:none !important; overflow:hidden; border-radius:inherit; }
+.cmb-s-zone { position:absolute; overflow:hidden; }
+.cmb-zone-bottom { left:0; right:0; bottom:0; height:38%; }
+.cmb-zone-top { left:0; right:0; top:0; height:38%; }
+.cmb-zone-left { left:0; top:0; bottom:0; width:16%; }
+.cmb-zone-right { right:0; top:0; bottom:0; width:16%; }
+.cmb-pos-all .cmb-zone-all { inset:0; }
+.cmb-pos-all .cmb-s-zone { inset:0; }
+.cmb-s-item { position:absolute; top:-14%; line-height:1; opacity:.92; filter:drop-shadow(0 0 3px rgba(255,255,255,.5)); will-change:top, transform; }
+.cmb-s-fall { animation: cmbSeasonFall linear infinite; }
+.cmb-s-rise { top:105%; animation: cmbSeasonRise ease-in infinite; }
+@keyframes cmbSeasonFall { 0% { top:-14%; transform:translateX(0) rotate(0deg); } 50% { transform:translateX(9px) rotate(180deg); } 100% { top:105%; transform:translateX(-5px) rotate(360deg); } }
+@keyframes cmbSeasonRise { 0% { top:105%; transform:translateX(0) scale(.8); opacity:.9; } 50% { transform:translateX(-7px) scale(1); } 100% { top:-14%; transform:translateX(5px) scale(1.15); opacity:0; } }
+
+.cmb-s-static { position:absolute; font-size:15px; line-height:1; }
+.cmb-s-glow { animation: cmbSeasonGlow 2.4s ease-in-out infinite alternate; }
+.cmb-s-hop { animation: cmbSeasonHop 1.3s ease-in-out infinite; }
+@keyframes cmbSeasonGlow { from { filter:drop-shadow(0 0 2px rgba(255,170,0,.4)); transform:scale(1); } to { filter:drop-shadow(0 0 9px rgba(255,170,0,.95)); transform:scale(1.12); } }
+@keyframes cmbSeasonHop { 0%, 100% { transform:translateY(0); } 50% { transform:translateY(-8px); } }
+.cmb-s-fly { position:absolute; left:-12%; font-size:16px; animation: cmbSeasonFly linear infinite; }
+@keyframes cmbSeasonFly { 0% { left:-12%; transform:translateY(0) scaleX(1); } 25% { transform:translateY(10px) scaleX(-1); } 50% { transform:translateY(-6px) scaleX(1); } 75% { transform:translateY(8px) scaleX(-1); } 100% { left:112%; transform:translateY(0) scaleX(1); } }
+
+/* Randen: sneeuwlaagje, lichtjes, vlaggetjes */
+.cmb-s-edge { position:absolute; }
+.cmb-edge-bottom { left:0; right:0; bottom:0; height:13px; }
+.cmb-edge-top { left:0; right:0; top:0; height:13px; }
+.cmb-edge-left { top:0; bottom:0; left:0; width:13px; }
+.cmb-edge-right { top:0; bottom:0; right:0; width:13px; }
+
+.cmb-edge-snowcap.cmb-edge-bottom { background: radial-gradient(circle at 50% 100%, #fff 0 9px, transparent 10px) 0 0/22px 14px repeat-x, linear-gradient(#fff, #fff) bottom/100% 4px no-repeat; filter:drop-shadow(0 -1px 3px rgba(170,225,255,.85)); }
+.cmb-edge-snowcap.cmb-edge-top { background: radial-gradient(circle at 50% 0%, #fff 0 9px, transparent 10px) 0 0/22px 14px repeat-x, linear-gradient(#fff, #fff) top/100% 4px no-repeat; filter:drop-shadow(0 1px 3px rgba(170,225,255,.85)); }
+.cmb-edge-snowcap.cmb-edge-left { background: radial-gradient(circle at 0% 50%, #fff 0 9px, transparent 10px) 0 0/14px 22px repeat-y, linear-gradient(#fff, #fff) left/4px 100% no-repeat; filter:drop-shadow(1px 0 3px rgba(170,225,255,.85)); }
+.cmb-edge-snowcap.cmb-edge-right { background: radial-gradient(circle at 100% 50%, #fff 0 9px, transparent 10px) 0 0/14px 22px repeat-y, linear-gradient(#fff, #fff) right/4px 100% no-repeat; filter:drop-shadow(-1px 0 3px rgba(170,225,255,.85)); }
+
+.cmb-edge-lights::before, .cmb-edge-lights::after { content:''; position:absolute; inset:0; animation: cmbBlinkA 1.1s steps(2, end) infinite; }
+.cmb-edge-lights::after { animation-name: cmbBlinkB; }
+.cmb-edge-lights.cmb-edge-top::before, .cmb-edge-lights.cmb-edge-bottom::before { background: radial-gradient(circle, #ff3b3b 0 3px, transparent 4px) 0 50%/48px 100% repeat-x, radial-gradient(circle, #ffd54a 0 3px, transparent 4px) 24px 50%/48px 100% repeat-x; }
+.cmb-edge-lights.cmb-edge-top::after, .cmb-edge-lights.cmb-edge-bottom::after { background: radial-gradient(circle, #3bff7a 0 3px, transparent 4px) 12px 50%/48px 100% repeat-x, radial-gradient(circle, #3bb7ff 0 3px, transparent 4px) 36px 50%/48px 100% repeat-x; }
+.cmb-edge-lights.cmb-edge-left::before, .cmb-edge-lights.cmb-edge-right::before { background: radial-gradient(circle, #ff3b3b 0 3px, transparent 4px) 50% 0/100% 48px repeat-y, radial-gradient(circle, #ffd54a 0 3px, transparent 4px) 50% 24px/100% 48px repeat-y; }
+.cmb-edge-lights.cmb-edge-left::after, .cmb-edge-lights.cmb-edge-right::after { background: radial-gradient(circle, #3bff7a 0 3px, transparent 4px) 50% 12px/100% 48px repeat-y, radial-gradient(circle, #3bb7ff 0 3px, transparent 4px) 50% 36px/100% 48px repeat-y; }
+@keyframes cmbBlinkA { 0% { opacity:1; } 100% { opacity:.25; } }
+@keyframes cmbBlinkB { 0% { opacity:.25; } 100% { opacity:1; } }
+
+.cmb-edge-bunting.cmb-edge-top { background: conic-gradient(from 150deg at 50% 0%, #ff7a00 0deg 60deg, transparent 60deg 360deg) 0 0/18px 13px repeat-x, conic-gradient(from 150deg at 50% 0%, #ffffff 0deg 60deg, transparent 60deg 360deg) 9px 0/18px 13px repeat-x; }
+.cmb-edge-bunting.cmb-edge-bottom { background: conic-gradient(from 330deg at 50% 100%, #ff7a00 0deg 60deg, transparent 60deg 360deg) 0 0/18px 13px repeat-x, conic-gradient(from 330deg at 50% 100%, #ffffff 0deg 60deg, transparent 60deg 360deg) 9px 0/18px 13px repeat-x; }
+.cmb-edge-bunting.cmb-edge-left { background: conic-gradient(from 60deg at 0% 50%, #ff7a00 0deg 60deg, transparent 60deg 360deg) 0 0/13px 18px repeat-y, conic-gradient(from 60deg at 0% 50%, #ffffff 0deg 60deg, transparent 60deg 360deg) 0 9px/13px 18px repeat-y; }
+.cmb-edge-bunting.cmb-edge-right { background: conic-gradient(from 240deg at 100% 50%, #ff7a00 0deg 60deg, transparent 60deg 360deg) 0 0/13px 18px repeat-y, conic-gradient(from 240deg at 100% 50%, #ffffff 0deg 60deg, transparent 60deg 360deg) 0 9px/13px 18px repeat-y; }
+
+@media (prefers-reduced-motion: reduce) {
+    .cmb-s-fall, .cmb-s-rise, .cmb-s-fly, .cmb-s-hop, .cmb-s-glow, .cmb-edge-lights::before, .cmb-edge-lights::after { animation-duration: 30s !important; }
+}
+
+
+/* ==========================================================================
+   COVER EFFECTEN 93 T/M 100  (sommige schieten buiten het speler-frame)
+   ========================================================================== */
+.cmb-stage-right.art-overflow,
+.cmb-stage-right:has(.cmb-art-stage.fx-shooting-stars, .cmb-art-stage.fx-comet-orbit, .cmb-art-stage.fx-confetti-cannon, .cmb-art-stage.fx-surprise-nebula, .cmb-art-stage.fx-surprise-pulsar) {
+    overflow: visible !important;
+    z-index: 4;
+}
+
+@keyframes fxShoot { 0% { transform: translateX(0) rotate(var(--a, 25deg)); opacity: 0; } 10% { opacity: 1; } 75% { opacity: 1; } 100% { transform: translateX(640px) rotate(var(--a, 25deg)); opacity: 0; } }
+@keyframes fxHeartThump { 0%, 100% { transform: scale(1); } 12% { transform: scale(1.14); } 24% { transform: scale(1); } 36% { transform: scale(1.1); } 48% { transform: scale(1); } }
+@keyframes fxBurstOut { 0% { transform: scale(.55) rotate(0deg); opacity: 1; } 100% { transform: scale(2.8) rotate(40deg); opacity: 0; } }
+@keyframes fxNebulaDrift { 0% { transform: translate(-14px, -8px) rotate(0deg) scale(.95); filter: blur(14px) hue-rotate(0deg); } 100% { transform: translate(14px, 10px) rotate(40deg) scale(1.12); filter: blur(18px) hue-rotate(80deg); } }
+@keyframes fxTwinkle { 0%, 100% { opacity: .25; } 50% { opacity: 1; } }
+
+/* 93. Vallende Sterren (buiten het frame) */
+.fx-shooting-stars::before { inset: auto; left: -190px; top: 14%; width: 150px; height: 2px; border-radius: 2px; --a: 24deg; background: linear-gradient(90deg, transparent, #ffffff); box-shadow: 0 0 10px #fff, 0 0 20px #63f6ff; animation: fxShoot 2.8s linear infinite; }
+.fx-shooting-stars::after { inset: auto; left: -190px; top: 72%; width: 120px; height: 2px; border-radius: 2px; --a: -18deg; background: linear-gradient(90deg, transparent, #ffd166); box-shadow: 0 0 10px #ffd166; animation: fxShoot 3.4s linear infinite 1.4s; }
+
+/* 94. Laser Grid */
+.fx-laser-grid::before { inset: -40px; border-radius: 18px; background: repeating-linear-gradient(0deg, rgba(99,246,255,.75) 0 1px, transparent 1px 14px), repeating-linear-gradient(90deg, rgba(255,91,200,.65) 0 1px, transparent 1px 14px); -webkit-mask-image: radial-gradient(circle, transparent 45%, #000 52%, transparent 78%); mask-image: radial-gradient(circle, transparent 45%, #000 52%, transparent 78%); animation: var(--fx-cw) 18s linear infinite; }
+.fx-laser-grid::after { inset: -12px; border-radius: 22px; border: 2px solid rgba(99,246,255,.9); box-shadow: 0 0 14px #63f6ff, inset 0 0 14px #ff5bc8; animation: fxPulseSoft 1.8s ease-in-out infinite alternate; }
+
+/* 95. Komeet Baan (buiten het frame) */
+.fx-comet-orbit::before { inset: -64px; border-radius: 50%; background: conic-gradient(from 0deg, transparent 0 250deg, rgba(255,255,255,.15) 300deg, #ffffff 358deg, transparent 360deg); -webkit-mask-image: radial-gradient(farthest-side, transparent calc(100% - 4px), #000 calc(100% - 3px)); mask-image: radial-gradient(farthest-side, transparent calc(100% - 4px), #000 calc(100% - 3px)); filter: drop-shadow(0 0 8px #fff); animation: var(--fx-cw) 4.2s linear infinite; }
+.fx-comet-orbit::after { inset: -84px; border-radius: 50%; background: conic-gradient(from 0deg, transparent 0 270deg, rgba(255,91,200,.2) 320deg, #ff5bc8 358deg, transparent 360deg); -webkit-mask-image: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 2px)); mask-image: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 2px)); filter: drop-shadow(0 0 8px #ff5bc8); animation: var(--fx-ccw) 6.5s linear infinite; }
+
+/* 96. Hartslag Ringen */
+.fx-heartbeat-ripples::before { inset: -14px; border: 3px solid rgba(255,70,120,.9); filter: drop-shadow(0 0 10px #ff4678); animation: fxHeartThump 1.5s ease-in-out infinite; }
+.fx-heartbeat-ripples::after { inset: -14px; border: 2px solid rgba(255,150,180,.8); animation: fxRippleWave 1.5s ease-out infinite; }
+
+/* 97. Prisma Burst */
+.fx-prism-burst::before { inset: -26px; background: conic-gradient(from 0deg, #ff0080, #ffea00, #00e676, #00e5ff, #7c4dff, #ff0080); filter: blur(9px); opacity: .85; animation: var(--fx-cw) 7s linear infinite; }
+.fx-prism-burst::after { inset: -18px; background: repeating-conic-gradient(from 0deg, rgba(255,255,255,.95) 0deg 2deg, transparent 2deg 20deg); filter: blur(.6px); animation: var(--fx-ccw) 10s linear infinite; }
+
+/* 98. Confetti Kanon (buiten het frame) */
+.fx-confetti-cannon::before { inset: -26px; border-radius: 12px; background:
+    radial-gradient(circle at 10% 10%, #ff5bc8 0 4px, transparent 5px), radial-gradient(circle at 90% 8%, #63f6ff 0 4px, transparent 5px),
+    radial-gradient(circle at 50% 2%, #ffd166 0 3px, transparent 4px), radial-gradient(circle at 96% 50%, #00e676 0 4px, transparent 5px),
+    radial-gradient(circle at 92% 92%, #ff1744 0 4px, transparent 5px), radial-gradient(circle at 50% 98%, #b388ff 0 3px, transparent 4px),
+    radial-gradient(circle at 8% 90%, #ffea00 0 4px, transparent 5px), radial-gradient(circle at 3% 50%, #ff9100 0 3px, transparent 4px);
+    animation: fxBurstOut 2.4s ease-out infinite; }
+.fx-confetti-cannon::after { inset: -26px; border-radius: 12px; background:
+    radial-gradient(circle at 25% 5%, #63f6ff 0 3px, transparent 4px), radial-gradient(circle at 75% 4%, #ff5bc8 0 3px, transparent 4px),
+    radial-gradient(circle at 98% 28%, #ffd166 0 3px, transparent 4px), radial-gradient(circle at 97% 75%, #00e676 0 3px, transparent 4px),
+    radial-gradient(circle at 70% 97%, #ff1744 0 3px, transparent 4px), radial-gradient(circle at 28% 96%, #ffea00 0 3px, transparent 4px),
+    radial-gradient(circle at 4% 72%, #b388ff 0 3px, transparent 4px), radial-gradient(circle at 5% 30%, #ff9100 0 3px, transparent 4px);
+    animation: fxBurstOut 2.4s ease-out infinite 1.2s; }
+
+/* 99. Verrassing: Nevel Droom (buiten het frame; kleuren schuiven langzaam door) */
+.fx-surprise-nebula::before { inset: -70px; border-radius: 50%; background: radial-gradient(circle at 30% 35%, rgba(124,77,255,.9), transparent 55%), radial-gradient(circle at 70% 60%, rgba(255,64,160,.8), transparent 55%), radial-gradient(circle at 50% 80%, rgba(0,200,255,.75), transparent 55%); animation: fxNebulaDrift 14s ease-in-out infinite alternate; }
+.fx-surprise-nebula::after { inset: -70px; border-radius: 50%; background:
+    radial-gradient(circle at 12% 30%, #fff 0 1.5px, transparent 2.5px), radial-gradient(circle at 80% 18%, #fff 0 1.5px, transparent 2.5px),
+    radial-gradient(circle at 92% 62%, #cfe 0 1.5px, transparent 2.5px), radial-gradient(circle at 24% 84%, #fff 0 1.5px, transparent 2.5px),
+    radial-gradient(circle at 58% 8%, #fde 0 1.5px, transparent 2.5px), radial-gradient(circle at 46% 94%, #fff 0 1.5px, transparent 2.5px);
+    animation: fxTwinkle 2.6s ease-in-out infinite; }
+
+/* 100. Verrassing: Pulsar Vuurtoren (twee lichtbundels draaien ver buiten het frame) */
+.fx-surprise-pulsar::before { inset: -190px; border-radius: 50%; background: conic-gradient(from 0deg, rgba(150,230,255,.7) 0deg 9deg, transparent 26deg 180deg, rgba(255,150,230,.6) 180deg 189deg, transparent 206deg 360deg); -webkit-mask-image: radial-gradient(circle, #000 18%, transparent 70%); mask-image: radial-gradient(circle, #000 18%, transparent 70%); animation: var(--fx-cw) 6s linear infinite; }
+.fx-surprise-pulsar::after { inset: -22px; border-radius: 50%; background: radial-gradient(circle, rgba(255,255,255,.55) 0%, rgba(120,210,255,.25) 55%, transparent 72%); filter: blur(6px); animation: fxPulseSoft 1.2s ease-in-out infinite alternate; }
+
+
+/* ==========================================================================
+   CLIPSLIDES: clip neemt het scherm over zolang de clip duurt
+   ========================================================================== */
+.cmb-clip-takeover { position:absolute; inset:0; z-index:60; background:#000; border-radius:inherit; overflow:hidden; opacity:0; transition:opacity .45s ease; pointer-events:none; }
+.cmb-clip-takeover.is-screen { position:fixed; z-index:9990; border-radius:0; }
+.cmb-clip-takeover.show { opacity:1; }
+.cmb-clip-media { position:absolute; inset:0; }
+.cmb-clip-media video, .cmb-clip-media iframe { width:100%; height:100%; border:0; display:block; background:#000; }
+.cmb-clip-media.fit-contain video { object-fit:contain; }
+.cmb-clip-media.fit-cover video { object-fit:cover; }
+.cmb-clip-title { position:absolute; left:0; right:0; bottom:0; padding:30px 18px 14px; background:linear-gradient(to top, rgba(0,0,0,.88), transparent); color:#fff; pointer-events:none; }
+.cmb-clip-artist { font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:#63f6ff; font-weight:800; }
+.cmb-clip-song { font-size:20px; font-weight:900; text-shadow:0 2px 6px #000; }
+
+
+/* ---- Draairichting van draaiende cover-effecten (instelbaar in beheer > Cover effecten) ----
+   Standaard draait elk effect zoals het ontworpen is. "cw" = alles met de klok mee, "ccw" = alles ertegen in. */
+:root, .cmb-stage-right { --fx-cw: fxRotCW; --fx-ccw: fxRotCCW; --fx-fan-cw: fxFanCW; --fx-fan-ccw: fxFanCCW; }
+.cmb-stage-right.art-dir-cw  { --fx-cw: fxRotCW;  --fx-ccw: fxRotCW;  --fx-fan-cw: fxFanCW;  --fx-fan-ccw: fxFanCW; }
+.cmb-stage-right.art-dir-ccw { --fx-cw: fxRotCCW; --fx-ccw: fxRotCCW; --fx-fan-cw: fxFanCCW; --fx-fan-ccw: fxFanCCW; }
+
+
+/* Extra cover-effecten 101-115; lightweight overlays for TV browsers. */
+.fx-retro-vinyl-spin::before,.fx-golden-record::before,.fx-blue-vinyl::before,.fx-vinyl-silver::before,.fx-disco-record::before,.fx-rainbow-vinyl::before,.fx-retro-disc::before { inset:-22px; border-radius:50%; background:repeating-radial-gradient(circle,#171717 0 2px,#333 3px 4px,#080808 5px 7px); box-shadow:0 0 12px rgba(255,209,102,.6); animation:var(--fx-cw) 4s linear infinite; opacity:.95; }
+.fx-golden-record::before { background:repeating-radial-gradient(circle,#b8860b 0 2px,#f9d976 3px 4px,#4a3000 5px 7px); }
+.fx-blue-vinyl::before { background:repeating-radial-gradient(circle,#001b4d 0 2px,#00cfff 3px 4px,#071126 5px 7px); }
+.fx-vinyl-silver::before { background:repeating-radial-gradient(circle,#222 0 2px,#ddd 3px 4px,#111 5px 7px); }
+.fx-disco-record::before,.fx-rainbow-vinyl::before { background:repeating-radial-gradient(circle,#111 0 2px,#333 3px 4px,#050505 5px 7px),conic-gradient(#ff0055,#ffd166,#00e5ff,#9d6cff,#ff0055); }
+.fx-cd-rainbow-ring::before,.fx-neon-cd::before,.fx-prism-disc::before,.fx-holographic-cd::before { inset:-22px; border-radius:50%; background:conic-gradient(#f00,#ff0,#0f0,#0ff,#00f,#f0f,#f00); animation:var(--fx-cw) 3s linear infinite; opacity:.9; }
+.fx-full-cassette::before,.fx-cassette-neon::before,.fx-tape-reels::before,.fx-studio-cassette::before { inset:-18px; border:5px solid #b9a16a; border-radius:12px; background:radial-gradient(circle at 30% 50%,#111 0 10%,#ddd 10.5% 12%,#252525 12.5% 18%,transparent 18.5%),radial-gradient(circle at 70% 50%,#111 0 10%,#ddd 10.5% 12%,#252525 12.5% 18%,transparent 18.5%),linear-gradient(135deg,#333,#999,#222); opacity:.95; }
+.fx-cassette-neon::before { border-color:#ff5bc8; filter:drop-shadow(0 0 8px #ff5bc8); }
+.fx-full-cassette::before,.fx-studio-cassette::before { border-radius:8px; }
+.fx-vinyl-record .cmb-art-wrap,.fx-vinyl-classic .cmb-art-wrap,.fx-retro-vinyl-spin .cmb-art-wrap,.fx-golden-record .cmb-art-wrap,.fx-blue-vinyl .cmb-art-wrap,.fx-vinyl-silver .cmb-art-wrap,.fx-rainbow-vinyl .cmb-art-wrap { border-radius:50%; }
+.fx-vinyl-record .cmb-art-img,.fx-vinyl-classic .cmb-art-img,.fx-retro-vinyl-spin .cmb-art-img,.fx-golden-record .cmb-art-img,.fx-blue-vinyl .cmb-art-img,.fx-vinyl-silver .cmb-art-img,.fx-rainbow-vinyl .cmb-art-img { border-radius:50%; animation:cmbRecordSpin 8s linear infinite; }
+@keyframes cmbRecordSpin { to { transform:rotate(360deg); } }
+
+/* Rand-voorbeelden: ingeklapt en kleiner */
+.cmb-tiles-fold .cmb-frame-tile-grid { gap:6px; margin-top:8px; }
+.cmb-tiles-fold .cmb-frame-tile-wrap { width:64px; }
+.cmb-tiles-fold .cmb-frame-tile { width:64px; height:40px; }
+.cmb-tiles-fold .cmb-frame-tile-label { font-size:9px; }
+
+/* Clip in het kleine derde venster (compact) */
+.cmb-own-frame { position: relative; overflow: hidden; }
+.cmb-clip-takeover.in-own .cmb-clip-title { padding: 14px 12px 8px; }
+.cmb-clip-takeover.in-own .cmb-clip-artist { font-size: 10px; }
+.cmb-clip-takeover.in-own .cmb-clip-song { font-size: 13px; }

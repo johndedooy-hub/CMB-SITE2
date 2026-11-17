@@ -1,0 +1,16 @@
+# CMB fresh-server defaults. Keep video byte-range requests enabled (Apache default).
+AddType video/mp4 .mp4 .m4v
+AddType video/webm .webm
+AddType video/ogg .ogv
+AddType video/quicktime .mov
+AddType video/x-matroska .mkv
+AddType application/vnd.apple.mpegurl .m3u8
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType image/svg+xml "access plus 7 days"
+  ExpiresByType image/webp "access plus 7 days"
+  ExpiresByType image/jpeg "access plus 7 days"
+  ExpiresByType image/png "access plus 7 days"
+  ExpiresByType text/css "access plus 1 day"
+  ExpiresByType application/javascript "access plus 1 day"
+</IfModule>
