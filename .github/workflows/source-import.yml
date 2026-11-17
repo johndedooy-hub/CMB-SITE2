@@ -1,0 +1,24 @@
+name: Eenmalige broncode-import
+on:
+  push:
+    branches: [main]
+    paths: ['.import/source.zip']
+permissions:
+  contents: write
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Pak gecontroleerd bronarchief uit
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f .import/source.zip
+          python3 -c 'import zipfile,pathlib; z=zipfile.ZipFile(".import/source.zip"); ns=z.namelist(); assert all(not pathlib.PurePosixPath(n).is_absolute() and ".." not in pathlib.PurePosixPath(n).parts for n in ns); z.extractall(".")'
+          git rm -f .import/source.zip .github/workflows/source-import.yml
+          git add -A
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Importeer gecontroleerde SITE2-bronbestanden uit release'
+          git push
